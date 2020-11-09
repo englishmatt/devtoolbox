@@ -1,7 +1,7 @@
 HTTP Toolbox
 ============
 
-A set of configurators, auditors, debugging tools, and more to make DevOps just that little bit easier.
+A set of configurators, auditors, debugging tools, and more to make DevOps and development for the web just that little bit easier.
 
 Tools Roadmap
 -------------
@@ -14,6 +14,16 @@ Tools Roadmap
 ### JSON
 - [ ] JSON auditor/formatter
 - [ ] JWT debugger
+
+### Web
+- [ ] Media Query Tester for:
+  - hover
+  - pointer
+  - any-pointer
+- [ ] CSS gradient generator
+- [ ] CSS background pattern generator
+- [ ] Ad banner previewer
+- [ ] Image srset generator
 
 Non-Functional
 --------------
