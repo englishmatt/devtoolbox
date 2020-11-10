@@ -34,6 +34,8 @@ Tools Roadmap
   - HTML entities
 - [ ] Unicode character list
 - [ ] HTML entities list
+- [ ] Flexbox playground
+- [ ] CSS grid playground
 
 ### Networking
 - [ ] IP4 calculator
