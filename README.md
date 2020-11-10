@@ -32,6 +32,7 @@ Tools Roadmap
   - Base64
   - URL
   - HTML entities
+  - Punycode
 - [ ] Unicode character list
 - [ ] HTML entities list
 - [ ] Flexbox playground
