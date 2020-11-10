@@ -13,6 +13,7 @@ Tools Roadmap
 
 ### JSON
 - [ ] JSON auditor/formatter
+- [ ] JSON <-> YAML converter
 - [ ] JWT debugger
 
 ### Web
@@ -24,6 +25,23 @@ Tools Roadmap
 - [ ] CSS background pattern generator
 - [ ] Ad banner previewer
 - [ ] Image srset generator
+- [ ] SVG optimizer
+- [ ] Raster image optimizer(s)
+- [ ] Encoders
+  - Base64
+  - URL
+  - HTML entities
+- [ ] Unicode character list
+- [ ] HTML entities list
+
+### Networking
+- [ ] IP4 calculator
+- [ ] Data rates converter
+- [ ] Data storage converter
+
+### UI/UX
+- [ ] Colour contrast checker
+- [ ] Colour palette picker
 
 Non-Functional
 --------------
