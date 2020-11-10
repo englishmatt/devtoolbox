@@ -27,6 +27,7 @@ Tools Roadmap
 - [ ] Image srset generator
 - [ ] SVG optimizer
 - [ ] Raster image optimizer(s)
+  - [ ] Responsive image resizer
 - [ ] Encoders
   - Base64
   - URL
