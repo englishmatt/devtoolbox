@@ -37,6 +37,7 @@ Tools Roadmap
 - [ ] HTML entities list
 - [ ] Flexbox playground
 - [ ] CSS grid playground
+- [ ] Smart punctuation <-> ASCII converter
 
 ### Networking
 - [ ] IP4 calculator
