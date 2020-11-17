@@ -1,0 +1,113 @@
+/* fira-sans-italic - latin */
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Fira Sans Italic'), local('Fira-Sans-Italic'),
+         url('../fonts/fira-sans-v10-latin-italic.woff2') format('woff2');
+  }
+  
+/* fira-sans-regular - latin */
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Fira Sans'), local('Fira-Sans'),
+         url('../fonts/fira-sans-v10-latin-regular.woff2') format('woff2');
+}
+  
+/* fira-sans-500 - latin */
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Fira Sans Medium'), local('Fira-Sans-Medium'),
+         url('../fonts/fira-sans-v10-latin-500.woff2') format('woff2');
+}
+  
+/* fira-sans-500italic - latin */
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: italic;
+    font-weight: 500;
+    src: local('Fira Sans Medium Italic'), local('Fira-Sans-Medium-Italic'),
+         url('../fonts/fira-sans-v10-latin-500italic.woff2') format('woff2');
+}
+
+/* fira-mono-regular - latin */
+@font-face {
+    font-family: 'Fira Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Fira Mono'), local('Fira-Mono'),
+         url('../fonts/fira-mono-v9-latin-regular.woff2') format('woff2');
+}
+  
+/* fira-mono-500 - latin */
+@font-face {
+    font-family: 'Fira Mono';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Fira Mono Medium'), local('Fira-Mono-Medium'),
+         url('../fonts/fira-mono-v9-latin-500.woff2') format('woff2');
+}
+
+:root {
+    --button-color: #fff;
+    --max-main-content-width: 100%;
+    --main-content-width: 50rem;
+    --highlight-blue: rgba(0, 0, 255, 0.3);
+    --horizontal-content-padding: 1rem;
+    --page-border-top-width: 5px;
+    --primary-accent-color: #000;
+    --code-font-family: 'Fira Mono', 'Consolas', monospace;
+}
+
+body {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+body {
+    font-family: 'Fira Sans', 'Inter', 'Roboto', 'Arial', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+strong {
+    font-weight: 500;
+}
+
+code {
+    font-family: var(--code-font-family);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+p {
+    margin: 0.3rem 0;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}

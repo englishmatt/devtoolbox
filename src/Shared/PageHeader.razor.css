@@ -1,0 +1,22 @@
+header {
+    border-top: var(--page-border-top-width) solid var(--primary-accent-color);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.logo {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 1.4rem auto;
+    width: var(--main-content-width);
+    max-width: var(--max-main-content-width);
+    box-sizing: border-box;
+    padding: 0 var(--horizontal-content-padding);
+}
+
+::deep a:link,
+::deep a:visited {
+    text-decoration: none;
+    color: currentColor;
+}

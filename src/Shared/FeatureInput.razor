@@ -1,0 +1,27 @@
+@if (!Autoexpand) {
+    if (ChildContent == null) {
+        <input @attributes="Attributes" />
+    } else {
+        <select @attributes="Attributes">
+            @ChildContent
+        </select>
+    }
+} else {
+    /*@ TODO: Figure out if wrapper div can be elimiated */
+    <div class="auto-expanding">
+        <span
+            contenteditable
+            @attributes="Attributes"
+            role="textbox"
+            aria-multiline="true" />
+    </div>
+}
+
+@code {
+    [Parameter] public bool Autoexpand { get; set; } = false;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> Attributes { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}
