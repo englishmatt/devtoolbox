@@ -1,0 +1,6 @@
+main {
+    width: var(--main-content-width);
+    max-width: var(--max-main-content-width);
+    padding: 0 var(--horizontal-content-padding);
+    box-sizing: border-box;
+}  
