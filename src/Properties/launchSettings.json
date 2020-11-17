@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "HttpToolbox": {
+    "DevToolbox": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
