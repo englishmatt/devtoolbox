@@ -16,8 +16,7 @@
         <tbody>
             <tr>
                 <td>
-                    <FeatureInput>
-                        <option value="" disabled selected hidden>Select feature&hellip;</option>
+                    <FeatureInput placeholder="Select feature&hellip;">
                         @foreach(var feature in availableFeatures) {
                             <option value="@feature.SpecificationName">@feature.DisplayName</option>
                         }

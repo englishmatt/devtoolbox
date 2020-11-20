@@ -9,9 +9,9 @@ tr th {
     vertical-align: top;
 }
 
-tr:not(:hover):not(:focus-within) :global(.auto-expanding),
-tr:not(:hover):not(:focus-within) :global(select),
-tr:not(:hover):not(:focus-within) :global(input) {
+tr:not(:hover):not(:focus-within) ::deep .auto-expanding,
+tr:not(:hover):not(:focus-within) ::deep select,
+tr:not(:hover):not(:focus-within) ::deep input {
     border-color: #eee;
 }
 

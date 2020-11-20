@@ -5,31 +5,33 @@ input {
 input,
 select,
 .auto-expanding {
-    font-family: var(--code-font-family);
-    font-size: 1.2rem;
-    line-height: 1.5;
-    width: 100%;
-    outline: initial;
-}
-
-input,
-select,
-.auto-expanding {
-    padding: 0.5rem 0.7rem;
-    border-radius: 0 !important;
-    border: 3px double var(--primary-accent-color);
-    -webkit-appearance: none;
     -moz-appearance: none;
+    -webkit-appearance: none;
     appearance: none;
-    box-sizing: border-box;
     background-color: #fff;
+    border-radius: 0;
+    border: 3px double var(--primary-accent-color);
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    outline: initial;
+    padding: 0.5rem 0.7rem;
+    width: 100%;
 }
 
-.auto-expanding span:empty::before,
-*::placeholder {
-    opacity: 0.6;
-    color: #000;
-    font-style: italic;
+select {
+    padding-top: 0.55rem;       /* Adjust for vertical alignment inconsistencies */
+    padding-bottom: 0.45rem;
+}
+
+select ::deep option {
+    font-style: normal;
+}
+
+select:invalid,
+.auto-expanding span:empty::before {
+    font-style: var(--placeholder-font-style);
 }
 
 :focus,
@@ -40,7 +42,7 @@ select,
 .auto-expanding span:empty::before {
     height: 0;
     display: inline-block;
-    content: attr(placeholder);
+    content: attr(aria-placeholder);
 }
 
 .auto-expanding span:focus {

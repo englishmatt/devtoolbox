@@ -2,7 +2,11 @@
     if (ChildContent == null) {
         <input @attributes="Attributes" />
     } else {
-        <select @attributes="Attributes">
+        /*@ TODO: Select placeholder support only works with required fields, due to limitations in CSS styling. It is likely that full support will require a class toggle with JS. */
+        <select @attributes="Attributes" required>
+            @if (!string.IsNullOrWhiteSpace(Placeholder)) {
+                <option value="" disabled selected hidden>@Placeholder</option>
+            }
             @ChildContent
         </select>
     }
@@ -13,12 +17,23 @@
             contenteditable
             @attributes="Attributes"
             role="textbox"
-            aria-multiline="true" />
+            aria-multiline="true"
+            aria-placeholder="@Placeholder" />
     </div>
 }
 
 @code {
+    /// <summary>
+    /// Indicates if the input should automatically vertically expand to the height of its content.
+    /// </summary>
+    /// <value>Default value: false</value>
     [Parameter] public bool Autoexpand { get; set; } = false;
+
+    /// <summary>
+    /// Set a placeholder value when the input is empty.
+    /// </summary>
+    /// <value></value>
+    [Parameter] public string Placeholder { get; set; } = string.Empty;
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> Attributes { get; set; }
