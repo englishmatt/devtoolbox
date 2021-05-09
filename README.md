@@ -47,6 +47,7 @@ Tools Roadmap
 ### UI/UX
 - [ ] Colour contrast checker
 - [ ] Colour palette picker
+- [ ] Colour gamut testing (for individual browsers)
 
 Non-Functional
 --------------
