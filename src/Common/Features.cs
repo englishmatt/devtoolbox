@@ -1,9 +1,14 @@
+using System.Collections.Generic;
+using System.Reflection;
+using System.Linq;
+using System.Diagnostics;
+
 namespace DevToolbox.Common {
-    
     public static class Features {
         // See the follow list for details: https://github.com/w3c/webappsec-permissions-policy/blob/master/features.md
         public static Feature Accelerometer { get; } = new Feature("Accelerometer", "accelerometer", "self");
-        public static Feature AmbientLightSensor { get; } = new Feature("Ambient light sensor", "ambient-light-sensor", "self");
+        public static Feature AmbientLightSensor { get; } =
+            new Feature("Ambient light sensor", "ambient-light-sensor", "self");
         public static Feature Autoplay { get; } = new Feature("Autoplay", "autoplay", "self");
         public static Feature Battery { get; } = new Feature("Battery", "battery", "self");
         public static Feature Camera { get; } = new Feature("Camera", "camera", "self");
@@ -22,7 +27,8 @@ namespace DevToolbox.Common {
         public static Feature Magnetometer { get; } = new Feature("Magnetometer", "magnetometer", "self");
         public static Feature Microphone { get; } = new Feature("Microphone", "microphone", "self");
         public static Feature Midi { get; } = new Feature("Midi", "midi", "self");
-        public static Feature NavigationOverride { get; } = new Feature("Navigation override", "navigation-override", "self");
+        public static Feature NavigationOverride { get; } =
+            new Feature("Navigation override", "navigation-override", "self");
         public static Feature Payment { get; } = new Feature("Payment", "payment", "self");
         public static Feature PictureInPicture { get; } = new Feature("Picture-in-picture", "picture-in-picture", "*");
         public static Feature PublickeyCredentialsGet { get; } =
@@ -31,6 +37,19 @@ namespace DevToolbox.Common {
         public static Feature SyncXhr { get; } = new Feature("Sync XHR", "sync-xhr", "*");
         public static Feature Usb { get; } = new Feature("USB", "usb", "self");
         public static Feature WebShare { get; } = new Feature("Web share", "web-share", "self");
-        public static Feature XrSpatialTracking { get; } = new Feature("XR spatial tracking", "xr-spatial-tracking", "self");
+        public static Feature XrSpatialTracking { get; } =
+            new Feature("XR spatial tracking", "xr-spatial-tracking", "self");
+
+        public static List<Feature> List() {
+            return typeof(Features).GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
+                .Select(f => f.GetValue(null))
+                .Cast<Feature>()
+                .ToList();
+        }
+
+        public static Feature FromString(string value) =>
+            Features.List().Single(f =>
+                string.Equals(f.SpecificationName, value, System.StringComparison.OrdinalIgnoreCase)
+            );
     }
 }

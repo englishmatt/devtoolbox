@@ -1,5 +1,7 @@
 @using System.Linq
 @using DevToolbox.Common
+@using Microsoft.Extensions.Logging
+@inject ILogger<FeatureInput> logger
 
 <div class="features">
     <table cellspacing="0" cellpadding="0">
@@ -14,34 +16,58 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <FeatureInput placeholder="Select feature&hellip;">
-                        @foreach(var feature in availableFeatures) {
-                            <option value="@feature.SpecificationName">@feature.DisplayName</option>
-                        }
-                    </FeatureInput>
-                </td>
-                <td>
-                    <FeatureInput placeholder="None allowed" autoexpand />
-                </td>
-            </tr>
+            @for (var entryIndex = 0; entryIndex < entries.Count; entryIndex += 1) {
+                var entry = entries[entryIndex];
+                var entriesWithoutCurrentEntry = entries.Except(new[] { entry })
+                    .Where(e => e.Feature.HasValue)
+                    .Select(e => e.Feature)
+                    .Cast<Feature>();
+
+                var options = Features.List().Except<Feature>(entriesWithoutCurrentEntry);
+                <tr>
+                    <td>
+                        <FeatureInput placeholder="Select feature&hellip;" Feature="@entry.Feature" FeatureChanged="@((Feature? feature) => handleFeatureChanged(entry, feature))">
+                            <option value="" disabled selected>Select feature&hellip;</option>
+                            @foreach (var option in options) {
+                                <option value="@option.SpecificationName">@option.DisplayName</option>
+                            }
+                        </FeatureInput>
+                    </td>
+                    <td>
+                        <FeatureInput placeholder="None allowed" value="@string.Join('\n', @entry.AllowList)" autoexpand />
+                    </td>
+                </tr>
+            }
+            @* <ul>
+                @foreach (var entry in entries) {
+                    <li>@entry.Feature?.DisplayName</li>
+                }
+            </ul> *@
         </tbody>
     </table>
 </div>
 
 @code {
 
-    private List<string> selectedFeatures = new List<string>() {
-        "accelerometer"
+    private List<FeatureEntry> entries = new() {
+        new FeatureEntry(Features.Accelerometer, new List<string>() {
+            "https://www.google.com",
+            "https://matt.titchener.net" }),
+        new FeatureEntry(Features.Battery, new List<string>() { "https://www.google.com" }),
+        new FeatureEntry()
     };
 
-    private readonly List<Feature> features =
-        typeof(Features).GetProperties().Select(pi => (Feature) pi.GetValue(null)).ToList();
+    private List<Feature> AvailableFeatures => Features.List().Where(feature =>
+            !entries
+                .Select(e => e.Feature)
+                .Contains(feature)
+        ).ToList();
 
-    private List<Feature> availableFeatures;
+    private void handleFeatureChanged(FeatureEntry currentEntry, Feature? feature) {
+        currentEntry.Feature = feature;
 
-    public PolicyFieldBuilder() {
-        availableFeatures = features.Where(feature => !selectedFeatures.Contains(feature.SpecificationName)).ToList();
+        if (entries.Last().Feature != null) {
+            entries.Add(new FeatureEntry());
+        }
     }
 }

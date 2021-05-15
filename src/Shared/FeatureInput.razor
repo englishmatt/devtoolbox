@@ -1,24 +1,29 @@
+@using DevToolbox.Common
+@using Microsoft.Extensions.Logging
+@inject ILogger<FeatureInput> logger
+
 @if (!Autoexpand) {
     if (ChildContent == null) {
-        <input @attributes="Attributes" />
+        <input @attributes="Attributes" value="@Value" />
     } else {
         /*@ TODO: Select placeholder support only works with required fields, due to limitations in CSS styling. It is likely that full support will require a class toggle with JS. */
-        <select @attributes="Attributes" required>
-            @if (!string.IsNullOrWhiteSpace(Placeholder)) {
-                <option value="" disabled selected hidden>@Placeholder</option>
-            }
+        <select @attributes="Attributes" required value="@Feature?.SpecificationName" @onchange="handleFeatureChange">
             @ChildContent
         </select>
     }
 } else {
-    /*@ TODO: Figure out if wrapper div can be elimiated */
+    /*@ TODO: Figure out if wrapper div can be eliminated */
     <div class="auto-expanding">
         <span
             contenteditable
             @attributes="Attributes"
             role="textbox"
             aria-multiline="true"
-            aria-placeholder="@Placeholder" />
+            aria-placeholder="@Placeholder">
+                @if (!string.IsNullOrWhiteSpace(Value)) {
+                    @Value;
+                }
+            </span>
     </div>
 }
 
@@ -37,6 +42,15 @@
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> Attributes { get; set; }
-
+    [Parameter] public Feature? Feature { get; set; }
+    [Parameter] public string Value { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EventCallback<Feature?> FeatureChanged { get; set; }
+
+    private async Task handleFeatureChange(ChangeEventArgs eventArgs) {
+        logger.LogInformation(eventArgs.Value.ToString());
+        var feature = Features.FromString(eventArgs.Value.ToString());
+        await FeatureChanged.InvokeAsync(feature);
+        Feature = feature;
+    }
 }
