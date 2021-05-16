@@ -48,7 +48,6 @@
     [Parameter] public EventCallback<Feature?> FeatureChanged { get; set; }
 
     private async Task handleFeatureChange(ChangeEventArgs eventArgs) {
-        logger.LogInformation(eventArgs.Value.ToString());
         var feature = Features.FromString(eventArgs.Value.ToString());
         await FeatureChanged.InvokeAsync(feature);
         Feature = feature;

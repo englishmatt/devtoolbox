@@ -8,6 +8,7 @@
         <colgroup>
             <col class="feature" />
             <col class="allowlist" />
+            <col class="actions" />
         </colgroup>
         <thead>
             <tr>
@@ -24,7 +25,7 @@
                     .Cast<Feature>();
 
                 var options = Features.List().Except<Feature>(entriesWithoutCurrentEntry);
-                <tr>
+                <tr class="feature-entry">
                     <td>
                         <FeatureInput placeholder="Select feature&hellip;" Feature="@entry.Feature" FeatureChanged="@((Feature? feature) => handleFeatureChanged(entry, feature))">
                             <option value="" disabled selected>Select feature&hellip;</option>
@@ -34,26 +35,26 @@
                         </FeatureInput>
                     </td>
                     <td>
-                        <FeatureInput placeholder="None allowed" value="@string.Join('\n', @entry.AllowList)" autoexpand />
+                        <FeatureInput placeholder="No URL allowed" value="@string.Join('\n', @entry.AllowList)" autoexpand spellcheck="false" />
+                    </td>
+
+                    <td class="action">
+                        @if (entry.Feature.HasValue) {
+                            <FlatButton @onclick="(() => handleRemoveFeature(entry))" class="delete">
+                                <span>Delete</span>
+                            </FlatButton>
+                        }
                     </td>
                 </tr>
             }
-            @* <ul>
-                @foreach (var entry in entries) {
-                    <li>@entry.Feature?.DisplayName</li>
-                }
-            </ul> *@
         </tbody>
     </table>
 </div>
 
 @code {
+    [Parameter] public EventCallback<List<FeatureEntry>> OnFeatureEntriesChange { get; set; }
 
     private List<FeatureEntry> entries = new() {
-        new FeatureEntry(Features.Accelerometer, new List<string>() {
-            "https://www.google.com",
-            "https://matt.titchener.net" }),
-        new FeatureEntry(Features.Battery, new List<string>() { "https://www.google.com" }),
         new FeatureEntry()
     };
 
@@ -63,11 +64,18 @@
                 .Contains(feature)
         ).ToList();
 
-    private void handleFeatureChanged(FeatureEntry currentEntry, Feature? feature) {
+    private async Task handleFeatureChanged(FeatureEntry currentEntry, Feature? feature) {
         currentEntry.Feature = feature;
 
         if (entries.Last().Feature != null) {
             entries.Add(new FeatureEntry());
         }
+
+        await OnFeatureEntriesChange.InvokeAsync(entries);
+    }
+
+    private async Task handleRemoveFeature(FeatureEntry entry) {
+        entries.Remove(entry);
+        await OnFeatureEntriesChange.InvokeAsync(entries);
     }
 }
