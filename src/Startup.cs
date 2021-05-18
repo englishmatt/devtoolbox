@@ -40,6 +40,12 @@ namespace DevToolbox
                 app.UseExceptionHandler("/Error");
             }
 
+            app.Use(async (context, next) => {
+
+                context.Response.Headers.Add("Permissions-Policy", "geolocation=()");
+                await next.Invoke();
+            });
+
             app.UseStaticFiles();
 
             app.UseRouting();

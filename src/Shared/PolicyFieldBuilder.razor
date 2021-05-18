@@ -52,7 +52,7 @@
 </div>
 
 @code {
-    [Parameter] public EventCallback<List<FeatureEntry>> OnFeatureEntriesChange { get; set; }
+    [Parameter] public EventCallback<List<FeatureEntry>> OnChange { get; set; }
 
     private List<FeatureEntry> entries = new() {
         new FeatureEntry()
@@ -71,11 +71,11 @@
             entries.Add(new FeatureEntry());
         }
 
-        await OnFeatureEntriesChange.InvokeAsync(entries);
+        await OnChange.InvokeAsync(entries);
     }
 
     private async Task handleRemoveFeature(FeatureEntry entry) {
         entries.Remove(entry);
-        await OnFeatureEntriesChange.InvokeAsync(entries);
+        await OnChange.InvokeAsync(entries);
     }
 }

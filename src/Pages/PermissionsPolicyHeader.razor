@@ -1,0 +1,45 @@
+@page "/permissions-policy-header"
+@using DevToolbox.Common;
+@using Microsoft.Extensions.Logging;
+@inject IJSRuntime JSRuntime
+@inject ILogger<PermissionsPolicyHeader> logger;
+
+@if (allowedFeatures?.Count > 0) {
+    <ul class="allowed-features">
+        @foreach (var feature in allowedFeatures) {
+            <li>@feature</li>
+        }
+    </ul>
+}
+
+<h1>Permissions-Policy</h1>
+<p>
+    The <em>Permissions-Policy</em> header is used by an HTML documents to <strong>blacklist</strong> browser features. If a feature is <em>not</em> specified in the HTTP header it <strong>is allowed</strong>. This header should be set when serving HTML content (e.g. <code>text/html</code>); use of this header in non-HTML documents (e.g.
+    <code>text/javascript</code>) is meaningless.
+</p>
+
+<a href="https://w3c.github.io/webappsec-permissions-policy/">W3C Permissions Policy</a>
+
+<h2>Configurator</h2>
+<p>
+    Add <strong>Features</strong> and their corresponding <strong>Allowlist</strong> below:
+</p>
+<PolicyHeaderField Entries="@featureEntries" />
+<PolicyFieldBuilder OnChange="handleFieldBuilderChange" />
+
+@code {
+    private List<string> allowedFeatures { get; set; }
+    private List<FeatureEntry> featureEntries { get; set; }
+
+    private void handleFieldBuilderChange(List<FeatureEntry> entries) {
+        featureEntries = entries;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (firstRender) {
+            allowedFeatures = (await JSRuntime.InvokeAsync<string[]>("document.featurePolicy.allowedFeatures", null)).ToList<string>();
+            logger.LogInformation(string.Join("\n", allowedFeatures));
+            StateHasChanged();
+        }
+    }
+}

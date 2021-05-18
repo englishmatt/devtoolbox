@@ -1,8 +1,19 @@
+@using DevToolbox.Common
+
 <div class="policy-header-field">
-    <FeatureInput readonly="readonly" value="permissions-policy: *" />
+    <FeatureInput readonly="readonly" Value="@headerValue" />
     <FlatButton>Copy</FlatButton>
 </div>
 
 @code {
-    [Parameter] public string Header { get; set; }
+    [Parameter] public List<FeatureEntry> Entries { get; set; }
+
+    private string headerValue => Entries == null ? "" :
+        string.Join(", ", this.Entries
+            .Where(e => e.Feature.HasValue)
+            .Select(e => e.Feature?.SpecificationName));
+
+    private string generatePermissionsHeaderFromEntries(List<FeatureEntry> entries) {
+        return null;
+    }
 }
